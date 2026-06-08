@@ -33,7 +33,6 @@ jobs:
           sf project deploy validate \
             --manifest manifest/package.xml \
             --target-org demoUAT \
-            --ignore-conflicts \
             --wait 30
 
       # Step 5 - Report result
