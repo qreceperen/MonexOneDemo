@@ -1,0 +1,41 @@
+name: Validate Against UAT
+
+on:
+  pull_request:
+    branches:
+      - uat
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1 - Checkout the code
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      # Step 2 - Install SF CLI
+      - name: Install SF CLI
+        run: |
+          npm install -g @salesforce/cli
+          sf --version
+
+      # Step 3 - Authenticate to UAT Sandbox
+      - name: Authenticate to UAT Sandbox
+        run: |
+          echo "${{ secrets.SFDX_AUTH_URL_UAT }}" > auth_url.txt
+          sf org login sfdx-url --sfdx-url-file auth_url.txt --alias demoUAT
+          rm -f auth_url.txt
+
+      # Step 4 - Validate against UAT (no actual deployment)
+      - name: Validate against UAT
+        run: |
+          sf project deploy validate \
+            --manifest manifest/package.xml \
+            --target-org demoUAT \
+            --ignore-conflicts \
+            --wait 30
+
+      # Step 5 - Report result
+      - name: Validation Complete
+        run: echo "✅ Validation passed! Safe to merge."
