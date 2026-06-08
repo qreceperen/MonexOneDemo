@@ -2,7 +2,7 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <!-- Deploy_Test_Flow - Added by developer for demo -->
     <types>
-        <members>Test_Validation_Field__c</members>
+        <members>Income_Transaction__c.Test_Validation_Field__c</members>
         <name>CustomField</name>
     </types>
     <version>66.0</version>
