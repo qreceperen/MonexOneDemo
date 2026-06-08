@@ -33,7 +33,8 @@ jobs:
           sf project deploy start \
             --manifest manifest/package.xml \
             --target-org demoUAT \
-            --wait 30
+            --wait 30 \
+            --ignore-conflicts
 
       # Step 5 - Report result
       - name: Deployment Complete
